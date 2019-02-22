@@ -5,7 +5,8 @@ main(List<String> arguments) async {
 
   // Version 1: no await
   // Run a task that will take a while
-  longTask().then((value) {
+  longTask().then((value) async {
+    await Future.delayed(Duration(milliseconds: 100));
     timestamp("1: then() clause of longTask() inside main()");
   });
 
@@ -18,11 +19,13 @@ main(List<String> arguments) async {
 
   // Version 2: await
   // Run a task that will take a while
-  await longTask().then((value) {
+  await longTask().then((value) async {
+    await Future.delayed(Duration(milliseconds: 100));
     timestamp("2: then() clause of longTask() inside main()");
   });
 
   timestamp("2: ==> This is the line of code *after* await longTask()");
+  print("\n");
 }
 
 Future longTask() {
